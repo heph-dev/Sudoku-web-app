@@ -1,6 +1,8 @@
+
 function inputSystem(puzzle_grid) {
 
-    let empty_cell_pos = ""
+    let empty_cell_pos = "";
+    let prev_cell;
 
     function inputToGrid(puzzle_grid, num, pos) {
         pos_row = pos[0];
@@ -8,23 +10,33 @@ function inputSystem(puzzle_grid) {
         puzzle_grid[pos_row][pos_col] = num;
         const cell = document.querySelector('[data-row="'+pos_row+'"][data-col="'+pos_col+'"]');
         cell.innerText = num;
+        console.table(puzzle_grid);
     }
 
     document.querySelectorAll(".empty-cell").forEach(div => {
         div.addEventListener("click", () => {
+
+            if (prev_cell && prev_cell.innerText == "") {
+               prev_cell.style.backgroundColor = ""; 
+            }
+
             empty_cell_pos = div.dataset.row + div.dataset.col;
-            console.log("Picked empty cell: " + empty_cell_pos[0] + ", " + empty_cell_pos[1]);
+            // console.log("Picked empty cell: " + empty_cell_pos[0] + ", " + empty_cell_pos[1]);
+            div.style.backgroundColor = "rgb(255, 253, 208)";
+            prev_cell = div;
+
         });
     });
 
     document.querySelectorAll(".input").forEach(div => {
         div.addEventListener("click", () => {
             if(empty_cell_pos != "") {
-                console.log(div.innerText);  
+                // console.log(div.innerText);  
                 inputToGrid(puzzle_grid, Number(div.innerText), empty_cell_pos);
                 empty_cell_pos = "";
+                styleEmptyCells();
             }
-            else alert("Pick a cell first bro");
+            else alert("⏸️Pick a cell first bro");
             
         });
     });
@@ -36,6 +48,7 @@ function styleEmptyCells() {
         if (div.innerText == "") {
             div.classList.add("empty-cell");
         }
+        else div.classList.remove("empty-cell");
     });
 }
 
@@ -227,6 +240,16 @@ function getValidGrid(grid) {
 } 
 
 function main() {
+
+    // Warn User before they close the tab on their browser
+    let warnOnLeave = false;
+
+    window.addEventListener("beforeunload", (event) => {
+        if (warnOnLeave) {
+            event.preventDefault();
+            event.returnValue = "";
+        }
+    });
 
     const clues = 30;  
     const missing_spaces = 81 - clues;  // Amount of missing spaces on grid
