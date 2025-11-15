@@ -1,15 +1,31 @@
 function inputSystem(puzzle_grid) {
 
-    function inputToGrid(puzzle_grid, num) {
-        puzzle_grid[0][0] = num;
-        const cell = document.querySelector('[data-row="0"][data-col="0"]');
+    let empty_cell_pos = ""
+
+    function inputToGrid(puzzle_grid, num, pos) {
+        pos_row = pos[0];
+        pos_col = pos[1];
+        puzzle_grid[pos_row][pos_col] = num;
+        const cell = document.querySelector('[data-row="'+pos_row+'"][data-col="'+pos_col+'"]');
         cell.innerText = num;
     }
 
+    document.querySelectorAll(".empty-cell").forEach(div => {
+        div.addEventListener("click", () => {
+            empty_cell_pos = div.dataset.row + div.dataset.col;
+            console.log("Picked empty cell: " + empty_cell_pos[0] + ", " + empty_cell_pos[1]);
+        });
+    });
+
     document.querySelectorAll(".input").forEach(div => {
         div.addEventListener("click", () => {
-            console.log(div.innerText);  
-            inputToGrid(puzzle_grid, Number(div.innerText));
+            if(empty_cell_pos != "") {
+                console.log(div.innerText);  
+                inputToGrid(puzzle_grid, Number(div.innerText), empty_cell_pos);
+                empty_cell_pos = "";
+            }
+            else alert("Pick a cell first bro");
+            
         });
     });
 
@@ -18,7 +34,7 @@ function inputSystem(puzzle_grid) {
 function styleEmptyCells() {
     document.querySelectorAll(".cell").forEach(div => {
         if (div.innerText == "") {
-            div.classList.add("empty");
+            div.classList.add("empty-cell");
         }
     });
 }
@@ -222,11 +238,11 @@ function main() {
     // console.table(grid);
     // console.table(puzzle_grid);
 
-    inputSystem(puzzle_grid);
-
     addToHtml(puzzle_grid);
 
     styleEmptyCells();
+
+    inputSystem(puzzle_grid);
 }
 
 main();
