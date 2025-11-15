@@ -1,3 +1,28 @@
+function inputSystem(puzzle_grid) {
+
+    function inputToGrid(puzzle_grid, num) {
+        puzzle_grid[0][0] = num;
+        const cell = document.querySelector('[data-row="0"][data-col="0"]');
+        cell.innerText = num;
+    }
+
+    document.querySelectorAll(".input").forEach(div => {
+        div.addEventListener("click", () => {
+            console.log(div.innerText);  
+            inputToGrid(puzzle_grid, Number(div.innerText));
+        });
+    });
+
+}
+
+function styleEmptyCells() {
+    document.querySelectorAll(".cell").forEach(div => {
+        if (div.innerText == "") {
+            div.classList.add("empty");
+        }
+    });
+}
+
 // Creates the HTML structure and adds the values 
 function addToHtml(grid) {
 
@@ -193,11 +218,15 @@ function main() {
     let grid = Array.from({ length: 9 }, () => Array(9).fill(0));
     getValidGrid(grid);
     let puzzle_grid = createPuzzle(grid, missing_spaces);
-    
+
+    // console.table(grid);
+    // console.table(puzzle_grid);
+
+    inputSystem(puzzle_grid);
+
     addToHtml(puzzle_grid);
 
-    console.table(grid);
-    console.table(puzzle_grid);
+    styleEmptyCells();
 }
 
 main();
