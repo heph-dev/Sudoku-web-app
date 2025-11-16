@@ -1,4 +1,25 @@
 
+function checkingSystem(puzzle_grid, grid) {
+
+    function checkGrid(puzzle_grid, grid) {
+        const noEmpty = puzzle_grid.every(row => row.every(cell => cell !== " "));
+        if(noEmpty) {
+            if(JSON.stringify(puzzle_grid) === JSON.stringify(grid)) {
+                alert("✅ You passed congratulations, emmerich");
+            }
+            else alert("❌ Of course you failed, nicole");
+        }
+        else alert("⏸️ Fill all cells first, nicole");
+    }
+
+    const myBtn = document.getElementById("submit-button");
+
+    myBtn.addEventListener("click", () => {
+        checkGrid(puzzle_grid, grid);
+    });
+
+}
+
 function inputSystem(puzzle_grid) {
 
     let empty_cell_pos = "";
@@ -10,7 +31,6 @@ function inputSystem(puzzle_grid) {
         puzzle_grid[pos_row][pos_col] = num;
         const cell = document.querySelector('[data-row="'+pos_row+'"][data-col="'+pos_col+'"]');
         cell.innerText = num;
-        console.table(puzzle_grid);
     }
 
     document.querySelectorAll(".empty-cell").forEach(div => {
@@ -23,6 +43,7 @@ function inputSystem(puzzle_grid) {
             empty_cell_pos = div.dataset.row + div.dataset.col;
             // console.log("Picked empty cell: " + empty_cell_pos[0] + ", " + empty_cell_pos[1]);
             div.style.backgroundColor = "rgb(255, 253, 208)";
+            div.innerText = "";
             prev_cell = div;
 
         });
@@ -33,12 +54,17 @@ function inputSystem(puzzle_grid) {
             if(empty_cell_pos != "") {
                 // console.log(div.innerText);  
                 inputToGrid(puzzle_grid, Number(div.innerText), empty_cell_pos);
-                empty_cell_pos = "";
-                styleEmptyCells();
             }
-            else alert("⏸️Pick a cell first bro");
+            else alert("⏸️ Pick a cell first, nicole");
             
         });
+    });
+
+    // Check if user has clicked away after clicking an empty cell
+    document.addEventListener("click", (event) => {
+        if (!event.target.classList.contains("empty-cell") && !event.target.classList.contains("input")) {
+            empty_cell_pos = "";
+        }
     });
 
 }
@@ -48,7 +74,7 @@ function styleEmptyCells() {
         if (div.innerText == "") {
             div.classList.add("empty-cell");
         }
-        else div.classList.remove("empty-cell");
+        
     });
 }
 
@@ -251,14 +277,14 @@ function main() {
         }
     });
 
-    const clues = 30;  
+    const clues = 50;  // default is 30
     const missing_spaces = 81 - clues;  // Amount of missing spaces on grid
  
     let grid = Array.from({ length: 9 }, () => Array(9).fill(0));
     getValidGrid(grid);
     let puzzle_grid = createPuzzle(grid, missing_spaces);
 
-    // console.table(grid);
+    console.table(grid);
     // console.table(puzzle_grid);
 
     addToHtml(puzzle_grid);
@@ -266,6 +292,8 @@ function main() {
     styleEmptyCells();
 
     inputSystem(puzzle_grid);
+
+    checkingSystem(puzzle_grid, grid);
 }
 
 main();

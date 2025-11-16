@@ -34,11 +34,11 @@ h1 {
 }
 
 .cell {
-  border: 0.0625rem solid black;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 2rem;
+    border: 0.0625rem solid black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2rem;
 }
 
 .subgrid {
@@ -58,12 +58,12 @@ h1 {
 }
 
 .input {
-  border: 0.0625rem solid black;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 2rem;
-  cursor: pointer;
+    border: 0.0625rem solid black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2rem;
+    cursor: pointer;
 }
 
 .input:hover {
@@ -77,4 +77,11 @@ h1 {
     background: rgb(255, 253, 208);
 }
 
+#submit-button {
+    position: absolute;
+    margin-top: 37rem;
+    font-size: 2rem;
+    cursor: pointer;
+    display: flex;
+}
 
