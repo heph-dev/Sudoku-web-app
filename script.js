@@ -5,7 +5,7 @@ function checkingSystem(puzzle_grid, grid) {
         const noEmpty = puzzle_grid.every(row => row.every(cell => cell !== " "));
         if(noEmpty) {
             if(JSON.stringify(puzzle_grid) === JSON.stringify(grid)) {
-                alert("✅ You passed congratulations, emmerich");
+                alert("✅ Congratulations, you passed, emmerich");
             }
             else alert("❌ Of course you failed, nicole");
         }
@@ -41,9 +41,11 @@ function inputSystem(puzzle_grid) {
             }
 
             empty_cell_pos = div.dataset.row + div.dataset.col;
-            // console.log("Picked empty cell: " + empty_cell_pos[0] + ", " + empty_cell_pos[1]);
+
             div.style.backgroundColor = "rgb(255, 253, 208)";
             div.innerText = "";
+            puzzle_grid[Number(div.dataset.row)][Number(div.dataset.col)] = " ";
+
             prev_cell = div;
 
         });
@@ -62,8 +64,9 @@ function inputSystem(puzzle_grid) {
 
     // Check if user has clicked away after clicking an empty cell
     document.addEventListener("click", (event) => {
-        if (!event.target.classList.contains("empty-cell") && !event.target.classList.contains("input")) {
+        if (!(event.target.classList.contains("empty-cell") || event.target.classList.contains("input"))) {
             empty_cell_pos = "";
+            prev_cell.style.backgroundColor = "";
         }
     });
 
