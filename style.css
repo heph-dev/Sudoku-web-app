@@ -69,14 +69,14 @@ h1 {
 }
 
 .input:hover {
-    background: rgb(255, 253, 208);
+    background: #FFF4E6;
 }
 
 .empty-cell {
     cursor: pointer;
 }
 .empty-cell:hover {
-    background: rgb(255, 253, 208);
+    background: #FFF4E6;
 }
 
 #submit-button {

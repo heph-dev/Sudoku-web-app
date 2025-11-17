@@ -42,7 +42,7 @@ function inputSystem(puzzle_grid) {
 
             empty_cell_pos = div.dataset.row + div.dataset.col;
 
-            div.style.backgroundColor = "rgb(255, 253, 208)";
+            div.style.backgroundColor = "#fecea0ff";
             div.innerText = "";
             puzzle_grid[Number(div.dataset.row)][Number(div.dataset.col)] = " ";
 
@@ -66,7 +66,9 @@ function inputSystem(puzzle_grid) {
     document.addEventListener("click", (event) => {
         if (!(event.target.classList.contains("empty-cell") || event.target.classList.contains("input"))) {
             empty_cell_pos = "";
-            prev_cell.style.backgroundColor = "";
+            if(prev_cell.innerText == "") {
+                prev_cell.style.backgroundColor = "";
+            }
         }
     });
 
