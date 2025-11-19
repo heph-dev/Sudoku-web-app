@@ -273,7 +273,7 @@ function getValidGrid(grid) {
 function main() {
 
     // Warn User before they close the tab on their browser
-    let warnOnLeave = true;
+    let warnOnLeave = false;
 
     window.addEventListener("beforeunload", (event) => {
         if (warnOnLeave) {
